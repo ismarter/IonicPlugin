@@ -14,13 +14,27 @@
                        placeholder="输入汉子或拼音查询" showCancelButton="true" cancelButtonText="取消" animated="true"
                        (input)="onInput($event)" (ionClear)="onClear($event)"
                        (ionCancel)="onCancel($event)" (ionFocus)="onFocus($event)"
-                       (ionBlur)="onBlur($event)">
+                       (ionBlur)="onBlur($event)" [value]="searchQuery">
         </ion-searchbar>
     </ion-toolbar>
 
 </ion-header>
 
-
 <ion-content>
+
+    <ion-list [virtualScroll]="dataLists?.inlandCity" [headerFn]="headerFn" [virtualTrackBy]="trackByFn">
+
+        <ion-item-divider color="light" *virtualHeader="let header">
+            {{ header }}
+        </ion-item-divider>
+
+        <button detail-none ion-item (click)="onSelect($event,item)" *virtualItem="let item">
+            {{item.name}}<span style="color: gray;">—{{item.portName}}</span>（{{item.portCode}}）
+
+            <!--<ion-icon name="ios-checkmark-circle-outline" [hidden]="_address!=addressItem.address" item-right-->
+            <!--color="calm"></ion-icon>-->
+        </button>
+
+    </ion-list>
 
 </ion-content>

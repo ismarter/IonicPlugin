@@ -16,32 +16,57 @@ export class SelectPlaneAddressModal {
 
     searchQuery: string = null;
 
+    dataLists: any = {};
+
     constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService) {
-        this.searchQuery = this.selectAddressService.planeSearchQuery || null;
+
     }
 
     ionViewDidLoad() {
-
+        this.searchQuery = this.selectAddressService.planeSearchQuery;
     }
 
     ionViewDidEnter() {
-        this.selectAddressService
-            .getPlaneDataList()
+        this.initializeItems(this.selectAddressService.planeSearchQuery);
+    }
+
+    initializeItems(value: string = null): Promise<any> {
+
+        return this.selectAddressService
+            .getOriginalPlaneDataList()
             .then((data) => {
-                console.log(data);
+                this.dataLists = Object.assign({}, data);
+                this.selectAddressService.planeSearchQuery = value;
+                if (value && value.trim() != '') {
+                    this.dataLists.inlandCity = this.dataLists.inlandCity.filter((item) => {
+                        return (item['name'] || '').indexOf(value) > -1 ||
+                            item['arriveIndex'] == value ||
+                            item['departIndex'] == value ||
+                            (item['ename'] || '').indexOf(value) > -1 ||
+                            (item['jp'] || '').indexOf(value) > -1 ||
+                            (item['portCode'] || '').indexOf(value) > -1 ||
+                            (item['portName'] || '').indexOf(value) > -1 ||
+                            (item['py'] || '').indexOf(value) > -1;
+                    });
+                }
+
+                return this.dataLists;
             })
+            .catch(() => {
+
+            });
     }
 
     onInput($event) {
-
+        this.initializeItems($event.target.value);
     }
 
     onClear($event) {
-
+        this.initializeItems()
     }
 
     onCancel($event) {
-
+        this.initializeItems()
     }
 
     onFocus($event) {
@@ -50,6 +75,26 @@ export class SelectPlaneAddressModal {
 
     onBlur($event) {
 
+    }
+
+    onSelect($event, data) {
+        this.viewController.dismiss(data);
+    }
+
+    trackByFn(index: number, item: any) {
+        return item;
+    }
+
+    headerFn(record, recordIndex, records) {
+        if (recordIndex == 0) {
+            return records[0].initial;
+        }
+
+        if (records[recordIndex].initial != records[recordIndex - 1].initial) {
+            return records[recordIndex].initial;
+        }
+
+        return null;
     }
 
 }
