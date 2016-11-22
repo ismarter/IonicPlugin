@@ -1,0 +1,26 @@
+<ion-header>
+
+    <ion-navbar color="calm" no-border-bottom>
+        <ion-title>选择地点</ion-title>
+        <ion-buttons start>
+            <button ion-button icon-only>
+                <ion-icon name="close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+    <ion-toolbar no-border-top color="light">
+        <ion-searchbar [(ngModel)]="searchQuery"
+                       placeholder="输入汉子或拼音查询" showCancelButton="true" cancelButtonText="取消" animated="true"
+                       (input)="onInput($event)" (ionClear)="onClear($event)"
+                       (ionCancel)="onCancel($event)" (ionFocus)="onFocus($event)"
+                       (ionBlur)="onBlur($event)">
+        </ion-searchbar>
+    </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content>
+
+</ion-content>
