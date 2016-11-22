@@ -8,6 +8,8 @@ import {SelectBusAddressModal} from "../pages/modals/select-bus-address-modal/se
 import {SelectCountryAddressModal} from "../pages/modals/select-country-address-modal/select-country-address-modal";
 import {SelectShipAddressModal} from "../pages/modals/select-ship-address-modal/select-ship-address-modal";
 import {SelectAddressService} from "../providers/select-address-service/select-address-service";
+import {PLATFORMS_CONFIG_CONSTANT} from "../configs/platform.config";
+import {DEEP_LINK_CONFIG} from "../configs/deep-linker.config";
 
 
 //页面
@@ -35,7 +37,7 @@ const MODULES = [];
         ...PIPES
     ],
     imports: [
-        IonicModule.forRoot(MyApp),
+        IonicModule.forRoot(MyApp, PLATFORMS_CONFIG_CONSTANT, DEEP_LINK_CONFIG),
         ...MODULES
     ],
     bootstrap: [IonicApp],

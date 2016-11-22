@@ -6,13 +6,45 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>SelectAddress</ion-title>
-  </ion-navbar>
+    <ion-navbar color="clam">
+        <ion-title>插件列表</ion-title>
+    </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
+
+    <ion-list>
+        <ion-item>
+            <ion-label color="dark">飞机</ion-label>
+            <ion-input clearInput [(ngModel)]="plane" placeholder="请输入机场"></ion-input>
+            <button item-right ion-button outline color="clam" (click)="selectPlane($event)">选择</button>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="dark">火车</ion-label>
+            <ion-input clearInput [(ngModel)]="plane" placeholder="请输入机场"></ion-input>
+            <button item-right ion-button outline color="train" (click)="selectPlane($event)">选择</button>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="dark">轮船</ion-label>
+            <ion-input clearInput [(ngModel)]="plane" placeholder="请输入机场"></ion-input>
+            <button item-right ion-button outline color="ship" (click)="selectPlane($event)">选择</button>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="dark">汽车</ion-label>
+            <ion-input clearInput [(ngModel)]="plane" placeholder="请输入机场"></ion-input>
+            <button item-right ion-button outline color="bus" (click)="selectPlane($event)">选择</button>
+        </ion-item>
+
+        <ion-item>
+            <ion-label color="dark">地市</ion-label>
+            <ion-input clearInput [(ngModel)]="plane" placeholder="请输入机场"></ion-input>
+            <button item-right ion-button outline color="country" (click)="selectPlane($event)">选择</button>
+        </ion-item>
+    </ion-list>
 
 </ion-content>
