@@ -26,12 +26,17 @@ export class SelectCountryAddressModal {
 
     _approxHeaderHeight: string = '42px';
 
+    _title: string = '选择地点';
+
     constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService, public platform: Platform) {
         this.selectData = this.viewController.getNavParams().get('data') || null;
         this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.chinaSearchQuery || null;
         this._matchFn = this.viewController.getNavParams().get('matchFn') || this._defaultMatchFn;
         this._approxItemHeight = this.platform.is('ios') ? '53px' : '53px';
         this._approxHeaderHeight = this.platform.is('ios') ? '42px' : '42px';
+        if (this.viewController.getNavParams().get('title')) {
+            this._title = this.viewController.getNavParams().get('title');
+        }
     }
 
     ionViewDidLoad() {
