@@ -102,7 +102,7 @@ export class SelectPlaneAddressModal {
 
     private _defaultMatchFn(data, item): boolean {
         if (data && item) {
-            return data.indexOf(item.name) > -1 || data.indexOf(item.portName) > -1;
+            return data.indexOf(item.name) > -1 && data.indexOf(item.portName) > -1;
         }
         return false;
     }

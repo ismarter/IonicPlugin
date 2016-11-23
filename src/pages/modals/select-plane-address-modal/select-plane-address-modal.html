@@ -27,7 +27,7 @@
             常用城市
         </ion-item-divider>
         <ion-item-group>
-            <ion-grid no-padding>
+            <ion-grid>
                 <ion-row *ngFor="let list of reduceArray(dataLists?.inlandHot,5)">
                     <ion-col *ngFor="let item of list" width-20>
                         <button small block ion-button [outline]="!_matchFn(selectData,item)"
@@ -45,7 +45,8 @@
         <p text-center>没有匹配的结果</p>
     </ion-item>
 
-    <ion-list [hidden]="dataLists?.inlandCity?.length==0" [virtualScroll]="dataLists?.inlandCity" [headerFn]="headerFn"
+    <ion-list [hidden]="dataLists?.inlandCity?.length==0" bufferRatio="5" [virtualScroll]="dataLists?.inlandCity"
+              [headerFn]="headerFn"
               [virtualTrackBy]="trackByFn">
 
         <ion-item-divider color="light" *virtualHeader="let header">
