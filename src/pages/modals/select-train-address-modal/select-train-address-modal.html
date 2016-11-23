@@ -22,31 +22,13 @@
 
 <ion-content>
 
-    <ion-list [hidden]="null!=searchQuery&&''!=searchQuery" no-lines style="margin-bottom: 0;">
-        <ion-item-divider color="light">
-            常用城市
-        </ion-item-divider>
-        <ion-item-group>
-            <ion-grid>
-                <ion-row *ngFor="let list of reduceArray(dataLists?.inlandHot,5)">
-                    <ion-col *ngFor="let item of list" width-20>
-                        <button small block ion-button [outline]="!_matchFn(selectData,item)"
-                                color="gray"
-                                (click)="onSelect($event,item);">
-                            {{item.name}}
-                        </button>
-                    </ion-col>
-                </ion-row>
-            </ion-grid>
-        </ion-item-group>
-    </ion-list>
 
-    <ion-item [hidden]="dataLists?.inlandCity?.length>0" no-lines>
+    <ion-item [hidden]="dataLists?.length>0" no-lines>
         <p text-center>没有匹配的结果</p>
     </ion-item>
 
-    <ion-list [hidden]="dataLists?.inlandCity?.length==0" bufferRatio="5" [virtualScroll]="dataLists?.inlandCity"
-              [headerFn]="headerFn"
+    <ion-list [hidden]="dataLists?.length==0" bufferRatio="5" [virtualScroll]="dataLists"
+              [headerFn]="headerFn" [approxItemHeight]="_approxItemHeight" [approxHeaderHeight]="_approxHeaderHeight"
               [virtualTrackBy]="trackByFn">
 
         <ion-item-divider color="light" *virtualHeader="let header">
@@ -54,7 +36,8 @@
         </ion-item-divider>
 
         <button detail-none ion-item (click)="onSelect($event,item)" *virtualItem="let item">
-            {{item.name}}<span style="color: gray;">—{{item.portName}}</span>（{{item.portCode}}）
+            {{item[1]}}<span *ngIf="item[1]!=item[7]&&item[7]!=null&&item[7]!=''"
+                             style="color: gray;"> （{{item[7]}}）</span>
 
             <ion-icon name="ios-checkmark-circle-outline" [hidden]="!_matchFn(selectData,item)" item-right
                       color="calm"></ion-icon>

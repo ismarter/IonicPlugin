@@ -11,6 +11,10 @@ export class SelectAddressService {
 
     private _originalPlaneDataList: any = null;
 
+    trainSearchQuery: string = null;
+
+    private _originalTrainDataList: any = null;
+
     constructor(public http: Http) {
 
     }
@@ -34,6 +38,29 @@ export class SelectAddressService {
                         }
                     });
                     return this._originalPlaneDataList;
+                }).toPromise();
+        }
+    }
+
+    getOriginalTrainDataList(): Promise<any> {
+        if (this._originalTrainDataList) {
+            return Promise.resolve(this._originalTrainDataList);
+        } else {
+            return this.http.get(STATIC_RESOURCE_ENDPOINT + STATIC_RESOURCES.ADDRESS.TRAIN_ADDRESS)
+                .map(res => {
+                    this._originalTrainDataList = res.json();
+                    this._originalTrainDataList.sort(function (a, b) {
+                        if (a[4].toUpperCase() > b[4].toUpperCase()) {
+                            return 1;
+                        }
+                        if (a[4].toUpperCase() == b[4].toUpperCase()) {
+                            return 0;
+                        }
+                        if (a[4].toUpperCase() < b[4].toUpperCase()) {
+                            return -1;
+                        }
+                    });
+                    return this._originalTrainDataList;
                 }).toPromise();
         }
     }

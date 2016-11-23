@@ -33,11 +33,11 @@ export class SelectPlaneAddressModal {
     }
 
     ionViewWillEnter() {
-        this.initializeItems(this.selectAddressService.planeSearchQuery);
+
     }
 
     ionViewDidEnter() {
-
+        this.initializeItems(this.selectAddressService.planeSearchQuery);
     }
 
     initializeItems(value: string = null): Promise<any> {
