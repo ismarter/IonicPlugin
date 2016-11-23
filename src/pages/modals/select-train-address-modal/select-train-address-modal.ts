@@ -22,7 +22,7 @@ export class SelectTrainAddressModal {
 
     constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService, public platform: Platform) {
         this.selectData = this.viewController.getNavParams().get('data') || null;
-        this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.planeSearchQuery || null;
+        this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.trainSearchQuery || null;
         this._matchFn = this.viewController.getNavParams().get('matchFn') || this._defaultMatchFn;
         this._approxItemHeight = this.platform.is('ios') ? '53px' : '53px';
         this._approxHeaderHeight = this.platform.is('ios') ? '42px' : '42px';
@@ -37,7 +37,7 @@ export class SelectTrainAddressModal {
     }
 
     ionViewDidEnter() {
-        this.initializeItems(this.selectAddressService.planeSearchQuery);
+        this.initializeItems(this.selectAddressService.trainSearchQuery);
     }
 
     initializeItems(value: string = null): Promise<any> {
@@ -48,7 +48,7 @@ export class SelectTrainAddressModal {
 
                 this.dataLists = Object.assign([], data);
 
-                this.selectAddressService.planeSearchQuery = value;
+                this.selectAddressService.trainSearchQuery = value;
 
                 if (value && value.trim() != '') {
                     this.dataLists = this.dataLists.filter((item) => {
@@ -90,16 +90,20 @@ export class SelectTrainAddressModal {
     }
 
     onSelect($event, data) {
-        this.viewController.dismiss({
-            cityId: data[0],
-            cityName: data[1],
-            cityNameEN: data[2],
-            cityNameJP: data[3],
-            firstLetter: data[4],
-            ctripCityId: data[5],
-            hotFlag: data[6],
-            parentCityName: data[7]
-        });
+        let resultData = null;
+        if (data) {
+            resultData = {
+                cityId: data[0],
+                cityName: data[1],
+                cityNameEN: data[2],
+                cityNameJP: data[3],
+                firstLetter: data[4],
+                ctripCityId: data[5],
+                hotFlag: data[6],
+                parentCityName: data[7]
+            }
+        }
+        this.viewController.dismiss(resultData);
     }
 
     trackByFn(index: number, item: any) {

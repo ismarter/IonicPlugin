@@ -15,6 +15,10 @@ export class SelectAddressService {
 
     private _originalTrainDataList: any = null;
 
+    chinaSearchQuery: string = null;
+
+    private _originalChinaDataList: any = null;
+
     constructor(public http: Http) {
 
     }
@@ -61,6 +65,30 @@ export class SelectAddressService {
                         }
                     });
                     return this._originalTrainDataList;
+                }).toPromise();
+        }
+    }
+
+    getOriginalChinaDataList(): Promise<any> {
+        if (this._originalChinaDataList) {
+            return Promise.resolve(this._originalChinaDataList);
+        } else {
+            return this.http.get(STATIC_RESOURCE_ENDPOINT + STATIC_RESOURCES.ADDRESS.CHINA_ADDRESS)
+                .map(res => {
+                    this._originalChinaDataList = res.json();
+                    this._originalChinaDataList.sort(function (a, b) {
+                        if (a['cfrl'].toUpperCase() > b['cfrl'].toUpperCase()) {
+                            return 1;
+                        }
+                        if (a['cfrl'].toUpperCase() == b['cfrl'].toUpperCase()) {
+                            return 0;
+                        }
+                        if (a['cfrl'].toUpperCase() < b['cfrl'].toUpperCase()) {
+                            return -1;
+                        }
+                    });
+                    console.log(this._originalChinaDataList)
+                    return this._originalChinaDataList;
                 }).toPromise();
         }
     }
