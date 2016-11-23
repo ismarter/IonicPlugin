@@ -1,18 +1,65 @@
-<!--
-  Generated template for the SelectTrainAddressModal page.
-
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>selectTrainAddressModal</ion-title>
-  </ion-navbar>
+    <ion-navbar color="calm" no-border-bottom>
+        <ion-title>选择地点</ion-title>
+        <ion-buttons start>
+            <button ion-button icon-only (click)="onSelect($event,null)">
+                <ion-icon name="md-close"></ion-icon>
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+
+    <ion-toolbar no-border-top color="light">
+        <ion-searchbar [(ngModel)]="searchQuery"
+                       placeholder="输入汉子或拼音查询" showCancelButton="true" cancelButtonText="取消" animated="true"
+                       (input)="onInput($event)" (ionClear)="onClear($event)"
+                       (ionCancel)="onCancel($event)" (ionFocus)="onFocus($event)"
+                       (ionBlur)="onBlur($event)" [value]="searchQuery">
+        </ion-searchbar>
+    </ion-toolbar>
 
 </ion-header>
 
+<ion-content>
 
-<ion-content padding>
+    <ion-list [hidden]="null!=searchQuery&&''!=searchQuery" no-lines style="margin-bottom: 0;">
+        <ion-item-divider color="light">
+            常用城市
+        </ion-item-divider>
+        <ion-item-group>
+            <ion-grid>
+                <ion-row *ngFor="let list of reduceArray(dataLists?.inlandHot,5)">
+                    <ion-col *ngFor="let item of list" width-20>
+                        <button small block ion-button [outline]="!_matchFn(selectData,item)"
+                                color="gray"
+                                (click)="onSelect($event,item);">
+                            {{item.name}}
+                        </button>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-item-group>
+    </ion-list>
+
+    <ion-item [hidden]="dataLists?.inlandCity?.length>0" no-lines>
+        <p text-center>没有匹配的结果</p>
+    </ion-item>
+
+    <ion-list [hidden]="dataLists?.inlandCity?.length==0" bufferRatio="5" [virtualScroll]="dataLists?.inlandCity"
+              [headerFn]="headerFn"
+              [virtualTrackBy]="trackByFn">
+
+        <ion-item-divider color="light" *virtualHeader="let header">
+            {{ header }}
+        </ion-item-divider>
+
+        <button detail-none ion-item (click)="onSelect($event,item)" *virtualItem="let item">
+            {{item.name}}<span style="color: gray;">—{{item.portName}}</span>（{{item.portCode}}）
+
+            <ion-icon name="ios-checkmark-circle-outline" [hidden]="!_matchFn(selectData,item)" item-right
+                      color="calm"></ion-icon>
+        </button>
+
+    </ion-list>
 
 </ion-content>

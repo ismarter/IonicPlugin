@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController} from 'ionic-angular';
+import {NavController, ViewController, Platform} from 'ionic-angular';
 import {SelectAddressService} from "../../../providers/select-address-service/select-address-service";
 
 @Component({
@@ -16,10 +16,16 @@ export class SelectPlaneAddressModal {
 
     _matchFn: Function;
 
-    constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService) {
+    _approxItemHeight: string = '53px';
+
+    _approxHeaderHeight: string = '42px';
+
+    constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService, public platform: Platform) {
         this.selectData = this.viewController.getNavParams().get('data') || null;
         this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.planeSearchQuery || null;
         this._matchFn = this.viewController.getNavParams().get('matchFn') || this._defaultMatchFn;
+        this._approxItemHeight = this.platform.is('ios') ? '53px' : '53px';
+        this._approxHeaderHeight = this.platform.is('ios') ? '42px' : '42px';
     }
 
     ionViewDidLoad() {

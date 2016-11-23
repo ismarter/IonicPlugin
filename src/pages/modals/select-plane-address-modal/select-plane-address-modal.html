@@ -46,7 +46,7 @@
     </ion-item>
 
     <ion-list [hidden]="dataLists?.inlandCity?.length==0" bufferRatio="5" [virtualScroll]="dataLists?.inlandCity"
-              [headerFn]="headerFn"
+              [headerFn]="headerFn" [approxItemHeight]="_approxItemHeight" [approxHeaderHeight]="_approxHeaderHeight"
               [virtualTrackBy]="trackByFn">
 
         <ion-item-divider color="light" *virtualHeader="let header">

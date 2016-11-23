@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {NavController, ModalController} from 'ionic-angular';
 import {SelectPlaneAddressModal} from "../modals/select-plane-address-modal/select-plane-address-modal";
+import {SelectTrainAddressModal} from "../modals/select-train-address-modal/select-train-address-modal";
 
 /*
  Generated class for the SelectAddress page.
@@ -37,6 +38,17 @@ export class SelectAddressPage {
             console.log(data);
             if (data) {
                 this.plane = data.name + '-' + data.portName;
+            }
+        })
+        modal.present();
+    }
+
+    selectTrain($event) {
+        let modal = this.modalController.create(SelectTrainAddressModal, {data: this.train});
+        modal.onWillDismiss((data) => {
+            console.log(data);
+            if (data) {
+                this.train = data;
             }
         })
         modal.present();
