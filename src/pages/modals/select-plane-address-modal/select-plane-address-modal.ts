@@ -26,8 +26,12 @@ export class SelectPlaneAddressModal {
 
     }
 
-    ionViewDidEnter() {
+    ionViewWillEnter() {
         this.initializeItems(this.selectAddressService.planeSearchQuery);
+    }
+
+    ionViewDidEnter() {
+
     }
 
     initializeItems(value: string = null): Promise<any> {
@@ -49,7 +53,6 @@ export class SelectPlaneAddressModal {
                             (item['py'] || '').indexOf(value) > -1;
                     });
                 }
-
                 return this.dataLists;
             })
             .catch(() => {
@@ -99,9 +102,26 @@ export class SelectPlaneAddressModal {
 
     private _defaultMatchFn(data, item): boolean {
         if (data && item) {
-            return data == item.name + '-' + item.portName;
+            return data.indexOf(item.name) > -1 || data.indexOf(item.portName) > -1;
         }
         return false;
+    }
+
+    reduceArray(list, number: number = 4) {
+        let dataList = [];
+
+        if (list) {
+            let indexList = [];
+            list.forEach((item, index) => {
+                if (index % number == 0) {
+                    dataList.push(indexList);
+                    indexList = [];
+                }
+                indexList.push(item);
+            });
+            dataList.push(indexList);
+        }
+        return dataList;
     }
 
 }
