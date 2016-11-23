@@ -3,8 +3,8 @@
     <ion-navbar color="calm" no-border-bottom>
         <ion-title>选择地点</ion-title>
         <ion-buttons start>
-            <button ion-button icon-only>
-                <ion-icon name="close"></ion-icon>
+            <button ion-button icon-only (click)="onSelect($event,null)">
+                <ion-icon name="md-close"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -22,7 +22,12 @@
 
 <ion-content>
 
-    <ion-list [virtualScroll]="dataLists?.inlandCity" [headerFn]="headerFn" [virtualTrackBy]="trackByFn">
+    <ion-item [hidden]="dataLists?.inlandCity?.length>0" no-lines>
+        <p text-center>没有匹配的结果</p>
+    </ion-item>
+
+    <ion-list [hidden]="dataLists?.inlandCity?.length==0" [virtualScroll]="dataLists?.inlandCity" [headerFn]="headerFn"
+              [virtualTrackBy]="trackByFn">
 
         <ion-item-divider color="light" *virtualHeader="let header">
             {{ header }}
@@ -31,8 +36,8 @@
         <button detail-none ion-item (click)="onSelect($event,item)" *virtualItem="let item">
             {{item.name}}<span style="color: gray;">—{{item.portName}}</span>（{{item.portCode}}）
 
-            <!--<ion-icon name="ios-checkmark-circle-outline" [hidden]="_address!=addressItem.address" item-right-->
-            <!--color="calm"></ion-icon>-->
+            <ion-icon name="ios-checkmark-circle-outline" [hidden]="!_matchFn(selectData,item)" item-right
+                      color="calm"></ion-icon>
         </button>
 
     </ion-list>

@@ -35,7 +35,9 @@ export class SelectAddressPage {
         let modal = this.modalController.create(SelectPlaneAddressModal, {data: this.plane});
         modal.onWillDismiss((data) => {
             console.log(data);
-            // this.plane = data;
+            if (data) {
+                this.plane = data.name + '-' + data.portName;
+            }
         })
         modal.present();
     }

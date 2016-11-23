@@ -2,12 +2,6 @@ import {Component} from '@angular/core';
 import {NavController, ViewController} from 'ionic-angular';
 import {SelectAddressService} from "../../../providers/select-address-service/select-address-service";
 
-/*
- Generated class for the SelectPlaneAddressModal page.
-
- See http://ionicframework.com/docs/v2/components/#navigation for more info on
- Ionic pages and navigation.
- */
 @Component({
     selector: 'page-select-plane-address-modal',
     templateUrl: 'select-plane-address-modal.html'
@@ -18,12 +12,18 @@ export class SelectPlaneAddressModal {
 
     dataLists: any = {};
 
-    constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService) {
+    selectData: any;
 
+    _matchFn: Function;
+
+    constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService) {
+        this.selectData = this.viewController.getNavParams().get('data') || null;
+        this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.planeSearchQuery || null;
+        this._matchFn = this.viewController.getNavParams().get('matchFn') || this._defaultMatchFn;
     }
 
     ionViewDidLoad() {
-        this.searchQuery = this.selectAddressService.planeSearchQuery;
+
     }
 
     ionViewDidEnter() {
@@ -82,7 +82,7 @@ export class SelectPlaneAddressModal {
     }
 
     trackByFn(index: number, item: any) {
-        return item;
+        return item.name + '-' + item.portName;
     }
 
     headerFn(record, recordIndex, records) {
@@ -95,6 +95,13 @@ export class SelectPlaneAddressModal {
         }
 
         return null;
+    }
+
+    private _defaultMatchFn(data, item): boolean {
+        if (data && item) {
+            return data == item.name + '-' + item.portName;
+        }
+        return false;
     }
 
 }
