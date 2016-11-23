@@ -28,7 +28,7 @@ export class SelectCountryAddressModal {
 
     constructor(public navCtrl: NavController, public viewController: ViewController, public selectAddressService: SelectAddressService, public platform: Platform) {
         this.selectData = this.viewController.getNavParams().get('data') || null;
-        this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.planeSearchQuery || null;
+        this.searchQuery = this.viewController.getNavParams().get('searchQuery') || this.selectAddressService.chinaSearchQuery || null;
         this._matchFn = this.viewController.getNavParams().get('matchFn') || this._defaultMatchFn;
         this._approxItemHeight = this.platform.is('ios') ? '53px' : '53px';
         this._approxHeaderHeight = this.platform.is('ios') ? '42px' : '42px';
@@ -43,7 +43,7 @@ export class SelectCountryAddressModal {
     }
 
     ionViewDidEnter() {
-        this.initializeItems(this.selectAddressService.planeSearchQuery);
+        this.initializeItems(this.selectAddressService.chinaSearchQuery);
     }
 
     initializeItems(value: string = null): Promise<any> {
@@ -54,7 +54,7 @@ export class SelectCountryAddressModal {
 
                 this.dataLists = Object.assign([], data);
 
-                this.selectAddressService.planeSearchQuery = value;
+                this.selectAddressService.chinaSearchQuery = value;
 
                 if (value && value.trim() != '') {
                     this.dataLists = this.dataLists.filter((item) => {

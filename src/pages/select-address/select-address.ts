@@ -60,7 +60,7 @@ export class SelectAddressPage {
         modal.onWillDismiss((data) => {
             console.log(data);
             if (data) {
-                this.country = data;
+                this.country = data.cname;
             }
         })
         modal.present();
