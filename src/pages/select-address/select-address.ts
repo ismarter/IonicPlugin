@@ -56,14 +56,15 @@ export class SelectAddressPage {
     }
 
     selectCountry($event) {
-        let modal = this.modalController.create(SelectCountryAddressModal, {data: this.country});
-        modal.onWillDismiss((data) => {
-            console.log(data);
-            if (data) {
-                this.country = data.cname;
-            }
-        })
-        modal.present();
+        // let modal = this.modalController.create(SelectCountryAddressModal, {data: this.country});
+        // modal.onWillDismiss((data) => {
+        //     console.log(data);
+        //     if (data) {
+        //         this.country = data.cname;
+        //     }
+        // })
+        // modal.present();
+        this.navCtrl.push(SelectCountryAddressModal);
     }
 
 }

@@ -87,7 +87,6 @@ export class SelectAddressService {
                             return -1;
                         }
                     });
-                    console.log(this._originalChinaDataList)
                     return this._originalChinaDataList;
                 }).toPromise();
         }

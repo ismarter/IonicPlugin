@@ -13,7 +13,7 @@
     <meta name="theme-color" content="#4e8ef7">
 
     <!-- cordova.js required for cordova apps -->
-    <!--<script src="cordova.js"></script>-->
+    <script src="cordova.js"></script>
 
     <!-- un-comment this code to enable service worker
     <script>
@@ -37,6 +37,24 @@
 
 <!-- The bundle js is generated during the build process -->
 <script src="build/main.js"></script>
+
+<script>
+
+    function ANDROID_GO_BACK() {
+        window.cordova.fireDocumentEvent('Events');
+    }
+
+    window.onload = function () {
+        setTimeout(function () {
+            window.cordova.fireDocumentEvent('deviceready');
+        }, 0)
+        window.navigator.app = window.navigator.app || {};
+        window.navigator.app.exitApp = function () {
+            alert(123);
+        };
+    }
+
+</script>
 
 </body>
 </html>
